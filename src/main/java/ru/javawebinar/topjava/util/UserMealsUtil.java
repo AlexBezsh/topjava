@@ -45,8 +45,7 @@ public class UserMealsUtil {
             }
             if (calories > caloriesPerDay) {
                 for (UserMeal meal : pair.getValue()) {
-                    int secondOfDay = meal.getDateTime().toLocalTime().toSecondOfDay();
-                    if (secondOfDay >= startTime.toSecondOfDay() && secondOfDay <= endTime.toSecondOfDay()) {
+                    if (TimeUtil.isBetweenInclusive(meal.getDateTime().toLocalTime(), startTime, endTime)) {
                         list.add(new UserMealWithExcess(meal.getDateTime(), meal.getDescription(), meal.getCalories(), true));
                     }
                 }
