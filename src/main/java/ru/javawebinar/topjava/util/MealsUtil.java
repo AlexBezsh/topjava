@@ -28,6 +28,20 @@ public class MealsUtil {
         mealsTo.forEach(System.out::println);
     }
 
+    public static List<MealTo> getHardcodedMealToList() {
+        return Arrays.asList(
+            new MealTo(LocalDateTime.of(2020, 2, 11, 7, 30), "Завтрак", 600, false),
+            new MealTo(LocalDateTime.of(2020, 2, 11, 13, 30), "Обед", 700, false),
+            new MealTo(LocalDateTime.of(2020, 2, 11, 17, 30), "Ужин", 600, false),
+            new MealTo(LocalDateTime.of(2020, 2, 12, 7, 30), "Завтрак", 700, true),
+            new MealTo(LocalDateTime.of(2020, 2, 12, 10, 30), "Ланч", 800, true),
+            new MealTo(LocalDateTime.of(2020, 2, 12, 13, 30), "Обед", 700, true),
+            new MealTo(LocalDateTime.of(2020, 2, 12, 17, 30), "Ужин", 600, true),
+            new MealTo(LocalDateTime.of(2020, 2, 13, 7, 30), "Завтрак", 500, false),
+            new MealTo(LocalDateTime.of(2020, 2, 13, 10, 30), "Ланч", 600, false)
+        );
+    }
+
     public static List<MealTo> filteredByStreams(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
