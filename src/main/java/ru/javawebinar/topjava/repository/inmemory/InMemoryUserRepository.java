@@ -6,19 +6,22 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.AbstractNamedEntity;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.UsersUtil;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-@Repository
+@Repository("inMemoryUserRepository")
 public class InMemoryUserRepository implements UserRepository {
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
 
-
+    {
+        UsersUtil.USERS.forEach(this::save);
+    }
 
     @Override
     public boolean delete(int id) {
@@ -35,7 +38,7 @@ public class InMemoryUserRepository implements UserRepository {
             return user;
         }
         // handle case: update, but not present in storage
-        return repository.computeIfPresent(user.getId(), (id, oldMeal) -> user);
+        return repository.computeIfPresent(user.getId(), (id, oldUser) -> user);
     }
 
     @Override
@@ -58,7 +61,7 @@ public class InMemoryUserRepository implements UserRepository {
         return repository.values()
                 .stream()
                 .filter(v -> email.compareTo(v.getEmail()) == 0)
-                .findAny()
+                .findFirst()
                 .orElse(null);
     }
 }
