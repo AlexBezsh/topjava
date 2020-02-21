@@ -18,7 +18,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class MealServlet extends HttpServlet {
-    /*private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     private MealRepository repository;
 
@@ -75,5 +74,5 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
-    }*/
+    }
 }
