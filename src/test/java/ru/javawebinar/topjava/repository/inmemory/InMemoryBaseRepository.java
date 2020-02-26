@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
+import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.util.Collection;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
     }
 
     public boolean delete(int id) {
+        ValidationUtil.checkNotFoundWithId(map.remove(id) != null, id);
         return map.remove(id) != null;
     }
 

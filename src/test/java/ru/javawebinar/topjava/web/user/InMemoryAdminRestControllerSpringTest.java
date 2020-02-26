@@ -16,15 +16,14 @@ import java.util.Collection;
 
 import static ru.javawebinar.topjava.UserTestData.ADMIN;
 
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration({
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-db.xml"
+})
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
-    @Autowired
-    private AdminRestController controller;
-
-    @Autowired
-    private InMemoryUserRepository repository;
+    private InMemoryUserRepository repository = new InMemoryUserRepository();
 
     @Before
     public void setUp() throws Exception {
@@ -33,14 +32,14 @@ public class InMemoryAdminRestControllerSpringTest {
 
     @Test
     public void delete() throws Exception {
-        controller.delete(UserTestData.USER_ID);
-        Collection<User> users = controller.getAll();
+        repository.delete(UserTestData.USER_ID);
+        Collection<User> users = repository.getAll();
         Assert.assertEquals(1, users.size());
         Assert.assertEquals(ADMIN, users.iterator().next());
     }
 
     @Test(expected = NotFoundException.class)
     public void deleteNotFound() throws Exception {
-        controller.delete(10);
+        repository.delete(10);
     }
 }
