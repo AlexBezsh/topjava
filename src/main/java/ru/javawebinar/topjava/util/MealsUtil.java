@@ -17,15 +17,15 @@ public class MealsUtil {
     private MealsUtil() {
     }
 
-    public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
+    public static List<MealTo> getTos(List<Meal> meals, int caloriesPerDay) {
         return filteredByStreams(meals, caloriesPerDay, meal -> true);
     }
 
-    public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
+    public static List<MealTo> getFilteredTos(List<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
         return filteredByStreams(meals, caloriesPerDay, meal -> Util.isBetweenHalfOpen(meal.getTime(), startTime, endTime));
     }
 
-    public static List<MealTo> filteredByStreams(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
+    public static List<MealTo> filteredByStreams(List<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
